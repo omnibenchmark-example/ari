@@ -9,8 +9,8 @@ parser <- ArgumentParser(description="Calculate Adjusted Rand Index between clus
 # Add arguments
 parser$add_argument("--output_dir", "-o", dest="output_dir", type="character", help="output directory where files will be saved", default=getwd())
 parser$add_argument("--name", "-n", dest="name", type="character", help="name of the dataset", default="ari")
-parser$add_argument('--clusters', dest="clusters", type="character", help='clusters mapping', default=NULL)
-parser$add_argument('--labels', dest="labels", type="character", help='reference labels', default=NULL)
+parser$add_argument('--methods.clusters', dest="clusters", type="character", help='clusters mapping', default=NULL)
+parser$add_argument('--data.labels', dest="labels", type="character", help='reference labels', default=NULL)
 
 # Parse command-line arguments
 opt <- parser$parse_args()
@@ -36,7 +36,7 @@ reference_labels <- merged_df$label_reference
 ari_value <- adjustedRandIndex(cluster_labels, reference_labels)
 
 # Output ARI to a file
-output_file <- file.path(opt$output_dir, "ari.metrics.txt")
+output_file <- file.path(opt$output_dir, paste0(opt$name, ".metrics.txt"))
 writeLines(as.character(ari_value), output_file)
 
 cat("ARI calculated successfully. Results saved to:", output_file, "\n")
